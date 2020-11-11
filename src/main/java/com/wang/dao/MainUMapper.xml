@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.com.wang.dao.MainUMapper" >
+  <resultMap id="BaseResultMap" type="com.wang.pojo.MainU" >
+    <id column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="mimage" property="mimage" jdbcType="VARCHAR" />
+    <result column="mtitle" property="mtitle" jdbcType="VARCHAR" />
+    <result column="mcreatetime" property="mcreatetime" jdbcType="TIMESTAMP" />
+    <result column="mcontext" property="mcontext" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    mid, mimage, mtitle, mcreatetime,mcontext
+  </sql>
+
+
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+
+    from main_u
+    where mid = #{mid,jdbcType=INTEGER}
+  </select>
+
+  <!--分页-->
+  <select id="selectByLimit" resultMap="BaseResultMap" parameterType="com.wang.util.Page" >
+    select
+    <include refid="Base_Column_List" />
+
+    from main_u
+    order by mcreatetime desc
+
+     limit #{startIndex},#{pageSize}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from main_u
+    where mid = #{mid,jdbcType=INTEGER}
+  </delete>
+
+
+
+  <insert id="insertSelective" parameterType="com.wang.pojo.MainU" >
+    insert into main_u
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+      <if test="mimage != null" >
+        mimage,
+      </if>
+      <if test="mtitle != null" >
+        mtitle,
+      </if>
+      <if test="mcreatetime != null" >
+        mcreatetime,
+      </if>
+      <if test="mcontext != null" >
+        mcontext,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+      <if test="mimage != null" >
+        #{mimage,jdbcType=VARCHAR},
+      </if>
+      <if test="mtitle != null" >
+        #{mtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mcreatetime != null" >
+        #{mcreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mcontext != null" >
+        #{mcontext,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+
+  <select id="countByExample"   resultType="java.lang.Integer" >
+    select count(1) from main_u
+
+  </select>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.wang.pojo.MainU" >
+    update main_u
+    <set >
+      <if test="mimage != null" >
+        mimage = #{mimage,jdbcType=VARCHAR},
+      </if>
+      <if test="mtitle != null" >
+        mtitle = #{mtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mcreatetime != null" >
+        mcreatetime = #{mcreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mcontext != null" >
+        mcontext = #{mcontext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+
+</mapper>

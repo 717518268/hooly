@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.com.wang.dao.StautsUMapper" >
+  <resultMap id="BaseResultMap" type="com.wang.pojo.StautsU" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    sid, value, createtime
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from stauts_u
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stauts_u
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+
+
+  <insert id="insertSelective" parameterType="com.wang.pojo.StautsU" >
+    insert into stauts_u
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+
+  <select id="countByExample"   resultType="java.lang.Integer" >
+    select count(sid) from stauts_u
+
+  </select>
+
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.wang.pojo.StautsU" >
+    update stauts_u
+    <set >
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+
+</mapper>

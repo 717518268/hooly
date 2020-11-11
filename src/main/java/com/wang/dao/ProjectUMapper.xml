@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.com.wang.dao.ProjectUMapper" >
+  <resultMap id="BaseResultMap" type="com.wang.pojo.ProjectU" >
+    <id column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="ptitle" property="ptitle" jdbcType="VARCHAR" />
+    <result column="pcontext" property="pcontext" jdbcType="LONGVARCHAR" />
+    <result column="pcreatetime" property="pcreatetime" jdbcType="TIMESTAMP" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="pcount" property="pcount" jdbcType="INTEGER" />
+    <result column="pstauts" property="pstauts" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    pid, ptitle, pcontext,pcreatetime, cid, rid, pcount, pstauts
+  </sql>
+
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+
+    from project_u
+    where pid = #{pid,jdbcType=INTEGER}
+    limit 1
+  </select>
+
+
+  <select id="selectByLimitProject_u" resultMap="BaseResultMap" parameterType="com.wang.util.Page" >
+    select
+    <include refid="Base_Column_List" />
+
+    from project_u
+    order by pcreatetime
+    limit #{startIndex},#{pageSize}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from project_u
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+
+
+
+
+  <insert id="insertSelective" parameterType="com.wang.pojo.ProjectU" useGeneratedKeys="true" keyProperty="pid" keyColumn="pid">
+    insert into project_u
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+      <if test="ptitle != null" >
+        ptitle,
+      </if>
+      <if test="pcreatetime != null" >
+        pcreatetime,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="pcount != null" >
+        pcount,
+      </if>
+      <if test="pstauts != null" >
+        pstauts,
+      </if>
+      <if test="pcontext != null" >
+        pcontext,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+      <if test="ptitle != null" >
+        #{ptitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pcreatetime != null" >
+        #{pcreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="pcount != null" >
+        #{pcount,jdbcType=INTEGER},
+      </if>
+      <if test="pstauts != null" >
+        #{pstauts,jdbcType=VARCHAR},
+      </if>
+      <if test="pcontext != null" >
+        #{pcontext,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <select id="countByExample"   resultType="java.lang.Integer" >
+    select count(1) from project_u
+
+  </select>
+
+
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.wang.pojo.ProjectU" >
+    update project_u
+    <set >
+      <if test="ptitle != null" >
+        ptitle = #{ptitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pcreatetime != null" >
+        pcreatetime = #{pcreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        rid = #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="pcount != null" >
+        pcount = #{pcount,jdbcType=INTEGER},
+      </if>
+      <if test="pstauts != null" >
+        pstauts = #{pstauts,jdbcType=VARCHAR},
+      </if>
+      <if test="pcontext != null" >
+        pcontext = #{pcontext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+
+
+</mapper>

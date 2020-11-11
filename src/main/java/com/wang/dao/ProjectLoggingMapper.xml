@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.com.wang.dao.ProjectLoggingMapper" >
+  <resultMap id="BaseResultMap" type="com.wang.pojo.ProjectLogging" >
+    <id column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="lcontext" property="lcontext" jdbcType="VARCHAR" />
+    <result column="lstauts" property="lstauts" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    pid, lcontext, lstauts, createtime, username
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from project_logging
+    where pid = #{pid,jdbcType=INTEGER}
+    limit 1
+  </select>
+
+
+  <select id="selectByLimitProject_logging" resultMap="BaseResultMap" parameterType="com.wang.util.Page" >
+    select
+    <include refid="Base_Column_List" />
+    from project_logging
+    order by createtime desc
+    limit #{startIndex},#{pageSize}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from project_logging
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+
+
+  <insert id="insertSelective" parameterType="com.wang.pojo.ProjectLogging" >
+    insert into project_logging
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="lcontext != null" >
+        lcontext,
+      </if>
+      <if test="lstauts != null" >
+        lstauts,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="lcontext != null" >
+        #{lcontext,jdbcType=VARCHAR},
+      </if>
+      <if test="lstauts != null" >
+        #{lstauts,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <select id="countByExample"   resultType="java.lang.Integer" >
+    select count(1) from project_logging
+
+  </select>
+
+
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.wang.pojo.ProjectLogging" >
+    update project_logging
+    <set >
+      <if test="lcontext != null" >
+        lcontext = #{lcontext,jdbcType=VARCHAR},
+      </if>
+      <if test="lstauts != null" >
+        lstauts = #{lstauts,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+
+
+
+</mapper>
